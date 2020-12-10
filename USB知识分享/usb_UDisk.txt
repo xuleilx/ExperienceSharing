@@ -1,0 +1,550 @@
+https://blog.csdn.net/xcw1234/article/details/87778930
+比如udevadm info -a -p $(udevadm info -q path -n /dev/sda4). 其中udevadm info -q path -n /dev/sda4返回sysfs中的设备路径；udevadm info -a -p $(设备路径)，这将查询这个设备路径，把结果信息输出来：
+scsi_id 
+
+root@atlas7-arm:~# dmesg -n8
+root@atlas7-arm:~# sync
+root@atlas7-arm:~#
+[  112.763249] usb 1-1: new high-speed USB device number 2 using ci_hdrc
+[  112.944986] usb 1-1: New USB device found, idVendor=0951, idProduct=1666
+[  112.948919] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  112.961255] usb 1-1: Product: DataTraveler 3.0
+[  112.962925] usb 1-1: Manufacturer: Kingston
+[  112.971275] usb 1-1: SerialNumber: 408D5CBECAC3B170C914890D
+[  112.980499] usb-storage 1-1:1.0: USB Mass Storage device detected
+[  112.987468] Vendor: 0x0951, Product: 0x1666, Revision: 0x0100
+[  112.990395] Interface Subclass: 0x06, Protocol: 0x50
+[  113.001105] Transport: Bulk
+[  113.001149] Protocol: Transparent SCSI
+[  113.010503] scsi host0: usb-storage 1-1:1.0
+[  113.012843] usb-storage 1-1:1.0: waiting for device to settle before scanning
+[  113.013109] *** thread sleeping
+[  114.013209] usb-storage 1-1:1.0: starting scan
+[  114.014824] rq=fe rqtype=a1 value=0000 index=00 len=1
+[  114.020241] GetMaxLUN command result is 1, data is 0
+[  114.033480] *** thread awakened
+[  114.033789] Command INQUIRY (6 bytes)
+[  114.037507] bytes: 
+[  114.039507]  12 00 00 00 24 00
+[  114.042588] Bulk Command S 0x43425355 T 0x1 L 36 F 128 Trg 0 LUN 0 CL 6
+[  114.049264] xfer 31 bytes
+[  114.052012] Status code 0; transferred 31/31
+[  114.056273] -- transfer complete
+[  114.059371] Bulk command transfer result=0
+[  114.063548] xfer 36 bytes, 1 entries
+[  114.067142] Status code 0; transferred 36/36
+[  114.071176] -- transfer complete
+[  114.074444] Bulk data transfer result 0x0
+[  114.078494] Attempting to get CSW...
+[  114.081987] xfer 13 bytes
+[  114.087358] Status code 0; transferred 13/13
+[  114.088855] -- transfer complete
+[  114.092128] Bulk status result = 0
+[  114.095781] Bulk Status S 0x53425355 T 0x1 R 0 Stat 0x0
+[  114.100665] scsi cmd done, result=0x0
+[  114.104856] scsi 0:0:0:0: Direct-Access     Kingston DataTraveler 3.0 PMAP PQ: 0 ANSI: 6
+[  114.113007] *** thread sleeping
+[  114.123304] *** thread awakened
+[  114.123608] Command TEST_UNIT_READY (6 bytes)
+[  114.128180] bytes: 
+[  114.128430] sd 0:0:0:0: Attached scsi generic sg0 type 0
+[  114.142797]  00 00 00 00 00 00
+[  114.143021] Bulk Command S 0x43425355 T 0x2 L 0 F 0 Trg 0 LUN 0 CL 6
+[  114.156068] xfer 31 bytes
+[  114.157621] Status code 0; transferred 31/31
+[  114.160105] -- transfer complete
+[  114.175262] Bulk command transfer result=0
+[  114.176543] Attempting to get CSW...
+[  114.186347] xfer 13 bytes
+[  114.186641] Status code 0; transferred 13/13
+[  114.192009] -- transfer complete
+[  114.194715] Bulk status result = 0
+[  114.197142] Bulk Status S 0x53425355 T 0x2 R 0 Stat 0x0
+[  114.206339] scsi cmd done, result=0x0
+[  114.207462] *** thread sleeping
+[  114.216578] *** thread awakened
+[  114.216885] Bad LUN (0:1)
+[  114.220355] scsi cmd done, result=0x40000
+[  114.224417] usb-storage 1-1:1.0: scan complete
+[  114.240647] *** thread sleeping
+[  114.240952] *** thread awakened
+[  114.244722] Command READ_CAPACITY (10 bytes)
+[  114.250944] bytes: 
+[  114.250979]  25 00 00 00 00 00 00 00 00 00
+[  114.254561] Bulk Command S 0x43425355 T 0x3 L 8 F 128 Trg 0 LUN 0 CL 10
+[  114.261140] xfer 31 bytes
+[  114.266709] Status code 0; transferred 31/31
+[  114.268201] -- transfer complete
+[  114.273900] Bulk command transfer result=0
+[  114.275440] xfer 8 bytes, 1 entries
+[  114.284950] Status code 0; transferred 8/8
+[  114.286217] -- transfer complete
+[  114.294625] Bulk data transfer result 0x0
+[  114.295826] Attempting to get CSW...
+[  114.306927] xfer 13 bytes
+[  114.307287] Status code 0; transferred 13/13
+[  114.311017] -- transfer complete
+[  114.322947] Bulk status result = 0
+[  114.323814] Bulk Status S 0x53425355 T 0x3 R 0 Stat 0x0
+[  114.334508] scsi cmd done, result=0x0
+[  114.335483] sd 0:0:0:0: [sda] 60555264 512-byte logical blocks: (31.0 GB/28.8 GiB)
+[  114.347037] *** thread sleeping
+[  114.347473] *** thread awakened
+[  114.350824] Command MODE_SENSE (6 bytes)
+[  114.354957] bytes: 
+[  114.360618]  1a 00 3f 00 c0 00
+[  114.360840] Bulk Command S 0x43425355 T 0x4 L 192 F 128 Trg 0 LUN 0 CL 6
+[  114.368192] xfer 31 bytes
+[  114.370718] Status code 0; transferred 31/31
+[  114.375297] -- transfer complete
+[  114.378062] Bulk command transfer result=0
+[  114.382165] xfer 192 bytes, 1 entries
+[  114.386787] Status code -121; transferred 44/192
+[  114.390417] -- short read transfer
+[  114.394255] Bulk data transfer result 0x1
+[  114.397873] Attempting to get CSW...
+[  114.401213] xfer 13 bytes
+[  114.405022] Status code 0; transferred 13/13
+[  114.407819] -- transfer complete
+[  114.412583] Bulk status result = 0
+[  114.415091] Bulk Status S 0x53425355 T 0x4 R 148 Stat 0x0
+[  114.420126] scsi cmd done, result=0x0
+[  114.423764] sd 0:0:0:0: [sda] Write Protect is off
+[  114.430130] sd 0:0:0:0: [sda] Mode Sense: 2b 00 00 08
+[  114.433920] *** thread sleeping
+[  114.436751] *** thread awakened
+[  114.440529] Command MODE_SENSE (6 bytes)
+[  114.443964] bytes: 
+[  114.445922]  1a 00 3f 00 c0 00
+[  114.448706] Bulk Command S 0x43425355 T 0x5 L 192 F 128 Trg 0 LUN 0 CL 6
+[  114.455910] xfer 31 bytes
+[  114.458574] Status code 0; transferred 31/31
+[  114.465575] -- transfer complete
+[  114.466611] Bulk command transfer result=0
+[  114.470909] xfer 192 bytes, 1 entries
+[  114.479347] Status code -121; transferred 44/192
+[  114.481490] -- short read transfer
+[  114.485348] Bulk data transfer result 0x1
+[  114.489012] Attempting to get CSW...
+[  114.492549] xfer 13 bytes
+[  114.495835] Status code 0; transferred 13/13
+[  114.499510] -- transfer complete
+[  114.502624] Bulk status result = 0
+[  114.507091] Bulk Status S 0x53425355 T 0x5 R 148 Stat 0x0
+[  114.510933] scsi cmd done, result=0x0
+[  114.514953] sd 0:0:0:0: [sda] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+[  114.523363] *** thread sleeping
+[  114.534525] *** thread awakened
+[  114.534839] Command TEST_UNIT_READY (6 bytes)
+[  114.539314] bytes: 
+[  114.543281]  00 00 00 00 00 00
+[  114.544301] Bulk Command S 0x43425355 T 0x6 L 0 F 0 Trg 0 LUN 0 CL 6
+[  114.558648] xfer 31 bytes
+[  114.559200] Status code 0; transferred 31/31
+[  114.562828] -- transfer complete
+[  114.566108] Bulk command transfer result=0
+[  114.569995] Attempting to get CSW...
+[  114.573859] xfer 13 bytes
+[  114.577605] Status code 0; transferred 13/13
+[  114.580390] -- transfer complete
+[  114.594550] Bulk status result = 0
+[  114.595114] Bulk Status S 0x53425355 T 0x6 R 0 Stat 0x0
+[  114.604251] scsi cmd done, result=0x0
+[  114.605527] *** thread sleeping
+[  114.608286] *** thread awakened
+[  114.611443] Command ALLOW_MEDIUM_REMOVAL (6 bytes)
+[  114.618964] bytes: 
+[  114.618999]  1e 00 00 00 01 00
+[  114.621268] Bulk Command S 0x43425355 T 0x7 L 0 F 0 Trg 0 LUN 0 CL 6
+[  114.633083] xfer 31 bytes
+[  114.633423] Status code 0; transferred 31/31
+[  114.637283] -- transfer complete
+[  114.643585] Bulk command transfer result=0
+[  114.644842] Attempting to get CSW...
+[  114.649717] xfer 13 bytes
+[  114.651393] Status code 0; transferred 13/13
+[  114.655835] -- transfer complete
+[  114.658717] Bulk status result = 0
+[  114.665099] Bulk Status S 0x53425355 T 0x7 R 0 Stat 0x1
+[  114.667619] -- transport indicates command failure
+[  114.677620] Issuing auto-REQUEST_SENSE
+[  114.678946] Bulk Command S 0x43425355 T 0x8 L 96 F 128 Trg 0 LUN 0 CL 6
+[  114.688645] xfer 31 bytes
+[  114.689015] Status code 0; transferred 31/31
+[  114.692827] -- transfer complete
+[  114.696723] Bulk command transfer result=0
+[  114.701344] xfer 96 bytes, 1 entries
+[  114.705128] Status code -121; transferred 18/96
+[  114.708268] -- short read transfer
+[  114.722605] Bulk data transfer result 0x1
+[  114.723920] Attempting to get CSW...
+[  114.734538] xfer 13 bytes
+[  114.735164] Status code 0; transferred 13/13
+[  114.749042] -- transfer complete
+[  114.749434] Bulk status result = 0
+[  114.755717] Bulk Status S 0x53425355 T 0x8 R 78 Stat 0x0
+[  114.760953] -- Result from auto-sense is 0
+[  114.764389] -- code: 0x70, key: 0x5, ASC: 0x24, ASCQ: 0x0
+[  114.775393] (Unknown Key): 
+[  114.775435] (unknown ASC/ASCQ)
+[  114.780085] scsi cmd done, result=0x2
+[  114.782599] *** thread sleeping
+[  114.785478] *** thread awakened
+[  114.788389] Command TEST_UNIT_READY (6 bytes)
+[  114.797241] bytes: 
+[  114.797281]  00 00 00 00 00 00
+[  114.799559] Bulk Command S 0x43425355 T 0x9 L 0 F 0 Trg 0 LUN 0 CL 6
+[  114.811752] xfer 31 bytes
+[  114.812140] Status code 0; transferred 31/31
+[  114.816346] -- transfer complete
+[  114.819150] Bulk command transfer result=0
+[  114.824100] Attempting to get CSW...
+[  114.826974] xfer 13 bytes
+[  114.829544] Status code 0; transferred 13/13
+[  114.838454] -- transfer complete
+[  114.838926] Bulk status result = 0
+[  114.842231] Bulk Status S 0x53425355 T 0x9 R 0 Stat 0x0
+[  114.850797] scsi cmd done, result=0x0
+[  114.852644] *** thread sleeping
+[  114.857636] *** thread awakened
+[  114.857950] Command READ_CAPACITY (10 bytes)
+[  114.865043] bytes: 
+[  114.865079]  25 00 00 00 00 00 00 00 00 00
+[  114.868395] Bulk Command S 0x43425355 T 0xa L 8 F 128 Trg 0 LUN 0 CL 10
+[  114.878417] xfer 31 bytes
+[  114.878841] Status code 0; transferred 31/31
+[  114.882571] -- transfer complete
+[  114.888596] Bulk command transfer result=0
+[  114.889882] xfer 8 bytes, 1 entries
+[  114.897899] Status code 0; transferred 8/8
+[  114.899629] -- transfer complete
+[  114.902791] Bulk data transfer result 0x0
+[  114.907274] Attempting to get CSW...
+[  114.910511] xfer 13 bytes
+[  114.913137] Status code 0; transferred 13/13
+[  114.918222] -- transfer complete
+[  114.920619] Bulk status result = 0
+[  114.924127] Bulk Status S 0x53425355 T 0xa R 0 Stat 0x0
+[  114.929135] scsi cmd done, result=0x0
+[  114.933653] *** thread sleeping
+[  114.935449] *** thread awakened
+[  114.940225] Command MODE_SENSE (6 bytes)
+[  114.946843] bytes: 
+[  114.946881]  1a 00 3f 00 c0 00
+[  114.949296] Bulk Command S 0x43425355 T 0xb L 192 F 128 Trg 0 LUN 0 CL 6
+[  114.960529] xfer 31 bytes
+[  114.960972] Status code 0; transferred 31/31
+[  114.965056] -- transfer complete
+[  114.968420] Bulk command transfer result=0
+[  114.973007] xfer 192 bytes, 1 entries
+[  114.977087] Status code -121; transferred 44/192
+[  114.980861] -- short read transfer
+[  114.984269] Bulk data transfer result 0x1
+[  114.988161] Attempting to get CSW...
+[  114.991613] xfer 13 bytes
+[  114.994913] Status code 0; transferred 13/13
+[  114.998322] -- transfer complete
+[  115.001690] Bulk status result = 0
+[  115.005387] Bulk Status S 0x53425355 T 0xb R 148 Stat 0x0
+[  115.010356] scsi cmd done, result=0x0
+[  115.014309] *** thread sleeping
+[  115.017192] *** thread awakened
+[  115.020215] Command MODE_SENSE (6 bytes)
+[  115.024548] bytes: 
+[  115.026129]  1a 00 3f 00 c0 00
+[  115.028966] Bulk Command S 0x43425355 T 0xc L 192 F 128 Trg 0 LUN 0 CL 6
+[  115.036382] xfer 31 bytes
+[  115.042150] Status code 0; transferred 31/31
+[  115.055127] -- transfer complete
+[  115.055533] Bulk command transfer result=0
+[  115.075248] xfer 192 bytes, 1 entries
+[  115.077604] Status code -121; transferred 44/192
+[  115.089278] -- short read transfer
+[  115.089879] Bulk data transfer result 0x1
+[  115.104352] Attempting to get CSW...
+[  115.105087] xfer 13 bytes
+[  115.113485] Status code 0; transferred 13/13
+[  115.115090] -- transfer complete
+[  115.125000] Bulk status result = 0
+[  115.125762] Bulk Status S 0x53425355 T 0xc R 148 Stat 0x0
+[  115.141556] scsi cmd done, result=0x0
+[  115.142780] *** thread sleeping
+[  115.152595] *** thread awakened
+[  115.152901] Command READ_10 (10 bytes)
+[  115.161710] bytes: 
+[  115.161746]  28 00 00 00 00 00 00 00 08 00
+[  115.166390] Bulk Command S 0x43425355 T 0xd L 4096 F 128 Trg 0 LUN 0 CL 10
+[  115.198563] xfer 31 bytes
+[  115.199747] Status code 0; transferred 31/31
+[  115.212245] -- transfer complete
+[  115.215517] Bulk command transfer result=0
+[  115.216803] xfer 4096 bytes, 1 entries
+[  115.233008] Status code 0; transferred 4096/4096
+[  115.242472] -- transfer complete
+[  115.242954] Bulk data transfer result 0x0
+[  115.247070] Attempting to get CSW...
+[  115.262622] xfer 13 bytes
+[  115.265299] Status code 0; transferred 13/13
+[  115.266725] -- transfer complete
+[  115.277628] Bulk status result = 0
+[  115.278194] Bulk Status S 0x53425355 T 0xd R 0 Stat 0x0
+[  115.287769] scsi cmd done, result=0x0
+[  115.288798]  sda: sda1
+[  115.294990] *** thread sleeping
+[  115.300096] *** thread awakened
+[  115.300418] Command TEST_UNIT_READY (6 bytes)
+[  115.319523] bytes: 
+[  115.319560]  00 00 00 00 00 00
+[  115.321832] Bulk Command S 0x43425355 T 0xe L 0 F 0 Trg 0 LUN 0 CL 6
+[  115.336631] xfer 31 bytes
+[  115.337586] Status code 0; transferred 31/31
+[  115.340681] -- transfer complete
+[  115.360071] Bulk command transfer result=0
+[  115.361342] Attempting to get CSW...
+[  115.376796] xfer 13 bytes
+[  115.378400] Status code 0; transferred 13/13
+[  115.380852] -- transfer complete
+[  115.389012] Bulk status result = 0
+[  115.389635] Bulk Status S 0x53425355 T 0xe R 0 Stat 0x0
+[  115.405319] scsi cmd done, result=0x0
+[  115.406407] *** thread sleeping
+[  115.412137] *** thread awakened
+[  115.412438] Command TEST_UNIT_READY (6 bytes)
+[  115.444701] bytes: 
+[  115.444740]  00 00 00 00 00 00
+[  115.447018] Bulk Command S 0x43425355 T 0xf L 0 F 0 Trg 0 LUN 0 CL 6
+[  115.476453] xfer 31 bytes
+[  115.477660] Status code 0; transferred 31/31
+[  115.480504] -- transfer complete
+[  115.494102] Bulk command transfer result=0
+[  115.495411] Attempting to get CSW...
+[  115.509983] xfer 13 bytes
+[  115.512627] Status code 0; transferred 13/13
+[  115.514129] -- transfer complete
+[  115.517293] Bulk status result = 0
+[  115.537362] Bulk Status S 0x53425355 T 0xf R 0 Stat 0x0
+[  115.539860] scsi cmd done, result=0x0
+[  115.552615] *** thread sleeping
+[  115.552928] *** thread awakened
+[  115.556195] Command TEST_UNIT_READY (6 bytes)
+[  115.574697] bytes: 
+[  115.574735]  00 00 00 00 00 00
+[  115.577064] Bulk Command S 0x43425355 T 0x10 L 0 F 0 Trg 0 LUN 0 CL 6
+[  115.594506] xfer 31 bytes
+[  115.595255] Status code 0; transferred 31/31
+[  115.607613] -- transfer complete
+[  115.608083] Bulk command transfer result=0
+[  115.612166] Attempting to get CSW...
+[  115.621304] xfer 13 bytes
+[  115.622589] Status code 0; transferred 13/13
+[  115.627419] -- transfer complete
+[  115.631278] Bulk status result = 0
+[  115.631939] Bulk Status S 0x53425355 T 0x10 R 0 Stat 0x0
+[  115.639200] scsi cmd done, result=0x0
+[  115.641166] *** thread sleeping
+[  115.644162] *** thread awakened
+[  115.647404] Command READ_CAPACITY (10 bytes)
+[  115.651735] bytes: 
+[  115.666083]  25 00 00 00 00 00 00 00 00 00
+[  115.667358] Bulk Command S 0x43425355 T 0x11 L 8 F 128 Trg 0 LUN 0 CL 10
+[  115.675057] xfer 31 bytes
+[  115.677143] Status code 0; transferred 31/31
+[  115.681358] -- transfer complete
+[  115.684438] Bulk command transfer result=0
+[  115.688661] xfer 8 bytes, 1 entries
+[  115.692276] Status code 0; transferred 8/8
+[  115.696377] -- transfer complete
+[  115.699195] Bulk data transfer result 0x0
+[  115.703122] Attempting to get CSW...
+[  115.706984] xfer 13 bytes
+[  115.709513] Status code 0; transferred 13/13
+[  115.713756] -- transfer complete
+[  115.716860] Bulk status result = 0
+[  115.720075] Bulk Status S 0x53425355 T 0x11 R 0 Stat 0x0
+[  115.725624] scsi cmd done, result=0x0
+[  115.729016] *** thread sleeping
+[  115.732155] *** thread awakened
+[  115.735484] Command TEST_UNIT_READY (6 bytes)
+[  115.739654] bytes: 
+[  115.741550]  00 00 00 00 00 00
+[  115.744604] Bulk Command S 0x43425355 T 0x12 L 0 F 0 Trg 0 LUN 0 CL 6
+[  115.751099] xfer 31 bytes
+[  115.754401] Status code 0; transferred 31/31
+[  115.757934] -- transfer complete
+[  115.761236] Bulk command transfer result=0
+[  115.765520] Attempting to get CSW...
+[  115.768754] xfer 13 bytes
+[  115.771640] Status code 0; transferred 13/13
+[  115.776870] -- transfer complete
+[  115.788601] Bulk status result = 0
+[  115.789169] Bulk Status S 0x53425355 T 0x12 R 0 Stat 0x0
+[  115.794948] scsi cmd done, result=0x0
+[  115.798306] *** thread sleeping
+[  115.801307] *** thread awakened
+[  115.804632] Command MODE_SENSE (6 bytes)
+[  115.808420] bytes: 
+[  115.810417]  1a 00 3f 00 c0 00
+[  115.813445] Bulk Command S 0x43425355 T 0x13 L 192 F 128 Trg 0 LUN 0 CL 6
+[  115.820286] xfer 31 bytes
+[  115.823007] Status code 0; transferred 31/31
+[  115.827269] -- transfer complete
+[  115.830246] Bulk command transfer result=0
+[  115.834512] xfer 192 bytes, 1 entries
+[  115.838165] Status code -121; transferred 44/192
+[  115.842593] -- short read transfer
+[  115.846119] Bulk data transfer result 0x1
+[  115.850080] Attempting to get CSW...
+[  115.853582] xfer 13 bytes
+[  115.856765] Status code 0; transferred 13/13
+[  115.860810] -- transfer complete
+[  115.863934] Bulk status result = 0
+[  115.867420] Bulk Status S 0x53425355 T 0x13 R 148 Stat 0x0
+[  115.872997] scsi cmd done, result=0x0
+[  115.876523] *** thread sleeping
+[  115.879573] *** thread awakened
+[  115.882616] Command READ_10 (10 bytes)
+[  115.886431] bytes: 
+[  115.888383]  28 00 03 9b ff 80 00 00 08 00
+[  115.892205] Bulk Command S 0x43425355 T 0x14 L 4096 F 128 Trg 0 LUN 0 CL 10
+[  115.911126] xfer 31 bytes
+[  115.911512] Status code 0; transferred 31/31
+[  115.915737] -- transfer complete
+[  115.918559] Bulk command transfer result=0
+[  115.922795] xfer 4096 bytes, 1 entries
+[  115.926769] Status code 0; transferred 4096/4096
+[  115.930807] -- transfer complete
+[  115.934378] Bulk data transfer result 0x0
+[  115.937984] Attempting to get CSW...
+[  115.941612] xfer 13 bytes
+[  115.944895] Status code 0; transferred 13/13
+[  115.948475] -- transfer complete
+[  115.951610] Bulk status result = 0
+[  115.955507] Bulk Status S 0x53425355 T 0x14 R 0 Stat 0x0
+[  115.960297] scsi cmd done, result=0x0
+[  115.964261] *** thread sleeping
+[  115.967307] *** thread awakened
+[  115.970268] Command MODE_SENSE (6 bytes)
+[  115.974387] bytes: 
+[  115.976252]  1a 00 3f 00 c0 00
+[  115.979221] Bulk Command S 0x43425355 T 0x15 L 192 F 128 Trg 0 LUN 0 CL 6
+[  115.986458] xfer 31 bytes
+[  115.989141] Status code 0; transferred 31/31
+[  115.992900] -- transfer complete
+[  115.996352] Bulk command transfer result=0
+[  116.000284] xfer 192 bytes, 1 entries
+[  116.004293] Status code -121; transferred 44/192
+[  116.008455] -- short read transfer
+[  116.011989] Bulk data transfer result 0x1
+[  116.017106] Attempting to get CSW...
+[  116.028904] xfer 13 bytes
+[  116.029269] Status code 0; transferred 13/13
+[  116.033755] -- transfer complete
+[  116.036157] Bulk status result = 0
+[  116.039627] Bulk Status S 0x53425355 T 0x15 R 148 Stat 0x0
+[  116.045414] scsi cmd done, result=0x0
+[  116.048783] sd 0:0:0:0: [sda] Attached SCSI removable disk
+[  116.048787] *** thread sleeping
+[  116.048799] *** thread awakened
+[  116.048809] Command READ_10 (10 bytes)
+[  116.048815] bytes: 
+[  116.048836]  28 00 03 9b ff f0 00 00 08 00
+[  116.048851] Bulk Command S 0x43425355 T 0x16 L 4096 F 128 Trg 0 LUN 0 CL 10
+[  116.048857] xfer 31 bytes
+[  116.060482] Status code 0; transferred 31/31
+[  116.060490] -- transfer complete
+[  116.060497] Bulk command transfer result=0
+[  116.060507] xfer 4096 bytes, 1 entries
+[  116.070387] Status code 0; transferred 4096/4096
+[  116.070395] -- transfer complete
+[  116.070403] Bulk data transfer result 0x0
+[  116.070409] Attempting to get CSW...
+[  116.070416] xfer 13 bytes
+[  116.079891] Status code 0; transferred 13/13
+[  116.079900] -- transfer complete
+[  116.079907] Bulk status result = 0
+[  116.079917] Bulk Status S 0x53425355 T 0x16 R 0 Stat 0x0
+[  116.079930] scsi cmd done, result=0x0
+[  116.079944] *** thread sleeping
+[  116.097990] *** thread awakened
+[  116.098003] Command READ_10 (10 bytes)
+[  116.098008] bytes: 
+[  116.098030]  28 00 00 00 00 00 00 00 08 00
+[  116.098045] Bulk Command S 0x43425355 T 0x17 L 4096 F 128 Trg 0 LUN 0 CL 10
+[  116.098052] xfer 31 bytes
+[  116.102944] Status code 0; transferred 31/31
+[  116.102952] -- transfer complete
+[  116.102959] Bulk command transfer result=0
+[  116.102968] xfer 4096 bytes, 1 entries
+[  116.110498] Status code 0; transferred 4096/4096
+[  116.110505] -- transfer complete
+[  116.110512] Bulk data transfer result 0x0
+[  116.110518] Attempting to get CSW...
+[  116.110524] xfer 13 bytes
+[  116.117359] Status code 0; transferred 13/13
+[  116.117366] -- transfer complete
+[  116.117373] Bulk status result = 0
+[  116.117382] Bulk Status S 0x53425355 T 0x17 R 0 Stat 0x0
+[  116.117395] scsi cmd done, result=0x0
+[  116.117411] *** thread sleeping
+[  116.117714] *** thread awakened
+[  116.117725] Command READ_10 (10 bytes)
+[  116.117731] bytes: 
+[  116.117751]  28 00 00 00 00 08 00 00 08 00
+[  116.117764] Bulk Command S 0x43425355 T 0x18 L 4096 F 128 Trg 0 LUN 0 CL 10
+[  116.117771] xfer 31 bytes
+[  116.123969] Status code 0; transferred 31/31
+[  116.123976] -- transfer complete
+[  116.123984] Bulk command transfer result=0
+[  116.123993] xfer 4096 bytes, 1 entries
+[  116.129243] Status code 0; transferred 4096/4096
+[  116.129249] -- transfer complete
+[  116.129256] Bulk data transfer result 0x0
+[  116.129262] Attempting to get CSW...
+[  116.129268] xfer 13 bytes
+[  116.132908] Status code 0; transferred 13/13
+[  116.132915] -- transfer complete
+[  116.132922] Bulk status result = 0
+[  116.132931] Bulk Status S 0x53425355 T 0x18 R 0 Stat 0x0
+[  116.132940] scsi cmd done, result=0x0
+[  116.132954] *** thread sleeping
+[  116.133270] *** thread awakened
+[  116.133280] Command READ_10 (10 bytes)
+[  116.133285] bytes: 
+[  116.133305]  28 00 03 9b ff f8 00 00 01 00
+[  116.133319] Bulk Command S 0x43425355 T 0x19 L 512 F 128 Trg 0 LUN 0 CL 10
+[  116.133325] xfer 31 bytes
+[  116.148209] Status code 0; transferred 31/31
+[  116.148217] -- transfer complete
+[  116.148224] Bulk command transfer result=0
+[  116.148233] xfer 512 bytes, 1 entries
+[  116.149104] Status code 0; transferred 512/512
+[  116.149111] -- transfer complete
+[  116.149118] Bulk data transfer result 0x0
+[  116.149125] Attempting to get CSW...
+[  116.149131] xfer 13 bytes
+[  116.158580] Status code 0; transferred 13/13
+[  116.158588] -- transfer complete
+[  116.158595] Bulk status result = 0
+[  116.158605] Bulk Status S 0x53425355 T 0x19 R 0 Stat 0x0
+[  116.158617] scsi cmd done, result=0x0
+[  116.158634] *** thread sleeping
+[  116.158747] *** thread awakened
+[  116.158757] Command READ_10 (10 bytes)
+[  116.158763] bytes: 
+[  116.158784]  28 00 03 9b ff f9 00 00 01 00
+[  116.158798] Bulk Command S 0x43425355 T 0x1a L 512 F 128 Trg 0 LUN 0 CL 10
+[  116.158804] xfer 31 bytes
+[  116.162853] Status code 0; transferred 31/31
+[  116.162859] -- transfer complete
+[  116.162866] Bulk command transfer result=0
+[  116.162875] xfer 512 bytes, 1 entries
+[  116.170141] Status code 0; transferred 512/512
+[  116.170149] -- transfer complete
+[  116.170156] Bulk data transfer result 0x0
+[  116.170161] Attempting to get CSW...
+[  116.170168] xfer 13 bytes
+[  116.178457] Status code 0; transferred 13/13
+[  116.178463] -- transfer complete
+[  116.178471] Bulk status result = 0
+[  116.178480] Bulk Status S 0x53425355 T 0x1a R 0 Stat 0x0
+[  116.178490] scsi cmd done, result=0x0
